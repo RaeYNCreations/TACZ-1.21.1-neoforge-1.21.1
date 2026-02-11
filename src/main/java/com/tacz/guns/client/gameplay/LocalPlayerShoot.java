@@ -126,10 +126,6 @@ public class LocalPlayerShoot {
             IClientPlayerGunOperator.fromLocalPlayer(player).bolt();
             return ShootResult.NEED_BOLT;
         }
-        // 检查是否正在奔跑
-        if (gunOperator.getSynSprintTime() > 0) {
-            return ShootResult.IS_SPRINTING;
-        }
         // 触发开火事件
         if (NeoForge.EVENT_BUS.post(new GunShootEvent(player, mainHandItem, LogicalSide.CLIENT)).isCanceled()) {
             return ShootResult.FORGE_EVENT_CANCEL;
