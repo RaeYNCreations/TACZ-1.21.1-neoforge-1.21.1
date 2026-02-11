@@ -1,0 +1,4 @@
+- Updated to TaCZ 1.1.7-hotfix
+  - Accelerated Rendering compat is disabled due to rendering issues
+- Fixed guns with scope attached causes Distant Horizon LODs to render incorrectly
+  - This fix seems to have improved performance as well 
