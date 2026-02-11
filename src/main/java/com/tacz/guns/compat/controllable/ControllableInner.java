@@ -26,39 +26,39 @@ public class ControllableInner {
     public static final BindingContext GUN_KEY_CONFLICT = new GunKeyConflict(ResourceLocation.fromNamespaceAndPath(GunMod.MOD_ID, "gun_key"));
     public static final ButtonBinding AIM = new ButtonBinding(Buttons.LEFT_TRIGGER, "key.tacz.aim.desc", "key.category.tacz", GUN_KEY_CONFLICT, OnPressAndReleaseHandler.create(
         context -> Optional.of(() -> AimKey.onAimControllerPress(true)),
-        context -> AimKey.onAimControllerPress(false))
+        context -> Optional.of(() -> AimKey.onAimControllerPress(false)))
     );
     public static final ButtonBinding SHOOT = new ButtonBinding(Buttons.RIGHT_TRIGGER, "key.tacz.shoot.desc", "key.category.tacz", GUN_KEY_CONFLICT, OnPressAndReleaseHandler.create(
         context -> Optional.of(() -> ShootKey.semiShootController(true)),
-        context -> ShootKey.semiShootController(false))
+        context -> Optional.of(() -> ShootKey.semiShootController(false)))
     );
     public static final ButtonBinding RELOAD = new ButtonBinding(Buttons.B, "key.tacz.reload.desc", "key.category.tacz", GUN_KEY_CONFLICT, OnPressAndReleaseHandler.create(
         context -> Optional.of(() -> ReloadKey.onReloadControllerPress(true)),
-        context -> ReloadKey.onReloadControllerPress(false))
+        context -> Optional.of(() -> ReloadKey.onReloadControllerPress(false)))
     );
     public static final ButtonBinding MELEE = new ButtonBinding(Buttons.X, "key.tacz.melee.desc", "key.category.tacz", GUN_KEY_CONFLICT, OnPressAndReleaseHandler.create(
         context -> Optional.of(() -> MeleeKey.onMeleeControllerPress(true)),
-        context -> MeleeKey.onMeleeControllerPress(false))
+        context -> Optional.of(() -> MeleeKey.onMeleeControllerPress(false)))
     );
     public static final ButtonBinding ZOOM = new ButtonBinding(Buttons.X, "key.tacz.zoom.desc", "key.category.tacz", GUN_KEY_CONFLICT, OnPressAndReleaseHandler.create(
         context -> Optional.of(() -> ZoomKey.onZoomControllerPress(true)),
-        context -> ZoomKey.onZoomControllerPress(false))
+        context -> Optional.of(() -> ZoomKey.onZoomControllerPress(false)))
     );
     public static final ButtonBinding CRAWL = new ButtonBinding(Buttons.LEFT_THUMB_STICK, "key.tacz.crawl.desc", "key.category.tacz", GUN_KEY_CONFLICT, OnPressAndReleaseHandler.create(
         context -> Optional.of(() -> CrawlKey.onCrawlControllerPress(true)),
-        context -> CrawlKey.onCrawlControllerPress(false))
+        context -> Optional.of(() -> CrawlKey.onCrawlControllerPress(false)))
     );
     public static final ButtonBinding FIRE_SELECT = new ButtonBinding(Buttons.DPAD_LEFT, "key.tacz.fire_select.desc", "key.category.tacz", GUN_KEY_CONFLICT, OnPressAndReleaseHandler.create(
         context -> Optional.of(() -> FireSelectKey.onFireSelectControllerPress(true)),
-        context -> FireSelectKey.onFireSelectControllerPress(false))
+        context -> Optional.of(() -> FireSelectKey.onFireSelectControllerPress(false)))
     );
     public static final ButtonBinding INTERACT = new ButtonBinding(-1, "key.tacz.interact.desc", "key.category.tacz", GUN_KEY_CONFLICT, OnPressAndReleaseHandler.create(
         context -> Optional.of(() -> InteractKey.onInteractControllerPress(true)),
-        context -> InteractKey.onInteractControllerPress(false))
+        context -> Optional.of(() -> InteractKey.onInteractControllerPress(false)))
     );
     public static final ButtonBinding INSPECT = new ButtonBinding(-1, "key.tacz.inspect.desc", "key.category.tacz", GUN_KEY_CONFLICT, OnPressAndReleaseHandler.create(
         context -> Optional.of(() -> InspectKey.onInspectControllerPress(true)),
-        context -> InspectKey.onInspectControllerPress(false))
+        context -> Optional.of(() -> InspectKey.onInspectControllerPress(false)))
     );
 
     public static void init() {
