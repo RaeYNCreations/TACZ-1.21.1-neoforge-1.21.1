@@ -1,6 +1,7 @@
 package com.tacz.guns.adrenaline;
 
 import com.tacz.guns.config.common.AdrenalineConfig;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -12,7 +13,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class AdrenalineManager {
     private static final Map<UUID, PlayerAdrenalineData> playerData = new ConcurrentHashMap<>();
-    private static final UUID HEALTH_MODIFIER_UUID = UUID.fromString("a8b3c4d5-e6f7-8901-2345-6789abcdef01");
+    private static final ResourceLocation HEALTH_MODIFIER_ID = ResourceLocation.fromNamespaceAndPath("tacz", "adrenaline_health");
 
     public static class PlayerAdrenalineData {
         private final List<Long> recentKills = new ArrayList<>();
@@ -106,7 +107,7 @@ public class AdrenalineManager {
         AttributeInstance healthAttribute = player.getAttribute(Attributes.MAX_HEALTH);
         if (healthAttribute != null) {
             // Remove existing modifier if present
-            healthAttribute.removeModifier(HEALTH_MODIFIER_UUID);
+            healthAttribute.removeModifier(HEALTH_MODIFIER_ID);
             
             // Calculate the additive value (multiplier - 1) * base value
             double baseValue = healthAttribute.getBaseValue();
@@ -116,10 +117,9 @@ public class AdrenalineManager {
             float currentHealth = player.getHealth();
             float oldMaxHealth = player.getMaxHealth();
             
-            // Create and add new modifier
+            // Create and add new modifier using 1.21.1 API (ResourceLocation-based)
             AttributeModifier modifier = new AttributeModifier(
-                HEALTH_MODIFIER_UUID,
-                "Adrenaline Mode Health Boost",
+                HEALTH_MODIFIER_ID,
                 additiveValue,
                 AttributeModifier.Operation.ADD_VALUE
             );
@@ -134,7 +134,7 @@ public class AdrenalineManager {
     private static void removeHealthModifier(ServerPlayer player) {
         AttributeInstance healthAttribute = player.getAttribute(Attributes.MAX_HEALTH);
         if (healthAttribute != null) {
-            healthAttribute.removeModifier(HEALTH_MODIFIER_UUID);
+            healthAttribute.removeModifier(HEALTH_MODIFIER_ID);
             
             // Adjust current health if it's higher than new max
             float currentHealth = player.getHealth();
