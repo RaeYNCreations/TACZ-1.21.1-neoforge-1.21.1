@@ -83,8 +83,15 @@ public class ControllableInner {
         if (controller == null) {
             return;
         }
+        // Handle continuous shooting for auto fire
         if (controller.isButtonPressed(SHOOT.getButton()) && ShootKey.autoShootController()) {
             doRumble(controller);
+        }
+        // Handle continuous aim state for holding left trigger
+        if (controller.isButtonPressed(AIM.getButton())) {
+            AimKey.onAimControllerPress(true);
+        } else {
+            AimKey.onAimControllerPress(false);
         }
     }
 

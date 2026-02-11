@@ -87,10 +87,6 @@ public class LivingEntityShoot {
         if (data.isBolting) {
             return ShootResult.IS_BOLTING;
         }
-        // 检查是否在奔跑
-        if (data.sprintTimeS > 0) {
-            return ShootResult.IS_SPRINTING;
-        }
         IGunOperator gunOperator = IGunOperator.fromLivingEntity(shooter);
         // 判断子弹数
         Bolt boltType = gunIndex.getGunData().getBolt();

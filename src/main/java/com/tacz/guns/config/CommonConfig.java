@@ -1,5 +1,6 @@
 package com.tacz.guns.config;
 
+import com.tacz.guns.config.common.AdrenalineConfig;
 import com.tacz.guns.config.common.AmmoConfig;
 import com.tacz.guns.config.common.GunConfig;
 import com.tacz.guns.config.common.OtherConfig;
@@ -13,6 +14,7 @@ public final class CommonConfig {
         GunConfig.init(builder);
         AmmoConfig.init(builder);
         OtherConfig.init(builder);
+        AdrenalineConfig.init(builder);
         spec = builder.build();
     }
 }
