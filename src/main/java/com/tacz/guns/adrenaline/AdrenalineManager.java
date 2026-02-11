@@ -112,6 +112,10 @@ public class AdrenalineManager {
             double baseValue = healthAttribute.getBaseValue();
             double additiveValue = (multiplier - 1.0) * baseValue;
             
+            // Store current health percentage
+            float currentHealth = player.getHealth();
+            float oldMaxHealth = player.getMaxHealth();
+            
             // Create and add new modifier
             AttributeModifier modifier = new AttributeModifier(
                 HEALTH_MODIFIER_UUID,
@@ -121,8 +125,9 @@ public class AdrenalineManager {
             );
             healthAttribute.addPermanentModifier(modifier);
             
-            // Heal player to match new max health
-            player.setHealth((float) (player.getHealth() * multiplier));
+            // Scale health proportionally to new max health
+            float healthPercentage = currentHealth / oldMaxHealth;
+            player.setHealth(healthPercentage * player.getMaxHealth());
         }
     }
 
