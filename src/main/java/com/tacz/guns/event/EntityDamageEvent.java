@@ -1,5 +1,6 @@
 package com.tacz.guns.event;
 
+import com.tacz.guns.adrenaline.AdrenalineManager;
 import com.tacz.guns.init.ModAttributes;
 import com.tacz.guns.init.ModDamageTypes;
 import net.minecraft.world.entity.LivingEntity;
@@ -21,6 +22,15 @@ public class EntityDamageEvent {
             if (resistance != null) {
                 float modifiedDamage = event.getNewDamage() * (float) (1 - resistance.getValue());
                 event.setNewDamage(modifiedDamage);
+            }
+            
+            // Apply adrenaline damage multiplier if attacker is in adrenaline mode
+            if (event.getSource().getEntity() instanceof LivingEntity attacker) {
+                double damageMultiplier = AdrenalineManager.getDamageMultiplier(attacker.getUUID());
+                if (damageMultiplier > 1.0) {
+                    float newDamage = event.getNewDamage() * (float) damageMultiplier;
+                    event.setNewDamage(newDamage);
+                }
             }
         }
     }
