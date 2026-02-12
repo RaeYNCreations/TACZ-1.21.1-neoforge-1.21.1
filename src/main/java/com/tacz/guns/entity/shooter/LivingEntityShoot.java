@@ -1,5 +1,7 @@
 package com.tacz.guns.entity.shooter;
 
+import com.tacz.guns.adrenaline.AdrenalineManager;
+import com.tacz.guns.config.common.GunConfig;
 import com.tacz.guns.api.TimelessAPI;
 import com.tacz.guns.api.entity.IGunOperator;
 import com.tacz.guns.api.entity.ShootResult;
@@ -86,6 +88,12 @@ public class LivingEntityShoot {
         // 检查是否在拉栓
         if (data.isBolting) {
             return ShootResult.IS_BOLTING;
+        }
+        // Check if shooter can shoot while sprinting (config enabled OR has adrenaline mode)
+        boolean canShootWhileSprinting = GunConfig.ALLOW_SHOOT_WHILE_SPRINTING.get() || 
+                                        AdrenalineManager.hasAdrenalineMode(shooter);
+        if (!canShootWhileSprinting && data.sprintTimeS > 0) {
+            return ShootResult.IS_SPRINTING;
         }
         IGunOperator gunOperator = IGunOperator.fromLivingEntity(shooter);
         // 判断子弹数

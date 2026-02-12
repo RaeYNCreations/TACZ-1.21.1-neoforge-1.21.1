@@ -9,6 +9,7 @@ public class GunConfig {
     public static ModConfigSpec.IntValue DEFAULT_GUN_OTHER_SOUND_DISTANCE;
     public static ModConfigSpec.BooleanValue CREATIVE_PLAYER_CONSUME_AMMO;
     public static ModConfigSpec.BooleanValue AUTO_RELOAD_WHEN_RESPAWN;
+    public static ModConfigSpec.BooleanValue ALLOW_SHOOT_WHILE_SPRINTING;
 
     public static void init(ModConfigSpec.Builder builder) {
         builder.push("gun");
@@ -27,6 +28,9 @@ public class GunConfig {
 
         builder.comment("Auto reload all the guns in player inventory, useful for pvp servers");
         AUTO_RELOAD_WHEN_RESPAWN = builder.define("AutoReloadWhenRespawn", false);
+
+        builder.comment("Allow players to shoot while sprinting");
+        ALLOW_SHOOT_WHILE_SPRINTING = builder.define("AllowShootWhileSprinting", true);
 
         builder.pop();
     }
