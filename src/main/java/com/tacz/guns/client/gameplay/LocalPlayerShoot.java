@@ -1,5 +1,7 @@
 package com.tacz.guns.client.gameplay;
 
+import com.tacz.guns.adrenaline.AdrenalineManager;
+import com.tacz.guns.config.common.GunConfig;
 import com.tacz.guns.api.TimelessAPI;
 import com.tacz.guns.api.client.animation.statemachine.AnimationStateMachine;
 import com.tacz.guns.api.client.gameplay.IClientPlayerGunOperator;
@@ -125,6 +127,12 @@ public class LocalPlayerShoot {
         if (boltType == Bolt.MANUAL_ACTION && !hasAmmoInBarrel) {
             IClientPlayerGunOperator.fromLocalPlayer(player).bolt();
             return ShootResult.NEED_BOLT;
+        }
+        // Check if player can shoot while sprinting (config enabled OR has adrenaline mode)
+        boolean canShootWhileSprinting = GunConfig.ALLOW_SHOOT_WHILE_SPRINTING.get() || 
+                                        AdrenalineManager.hasAdrenalineMode(player);
+        if (!canShootWhileSprinting && gunOperator.getSynSprintTime() > 0) {
+            return ShootResult.IS_SPRINTING;
         }
         // 触发开火事件
         if (NeoForge.EVENT_BUS.post(new GunShootEvent(player, mainHandItem, LogicalSide.CLIENT)).isCanceled()) {

@@ -1,5 +1,6 @@
 package com.tacz.guns.command.sub;
 
+import com.tacz.guns.config.common.GunConfig;
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.arguments.BoolArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
@@ -25,7 +26,7 @@ public class ConfigCommand {
     private static int setConfig(CommandContext<CommandSourceStack> context) {
         ConfigKey key = context.getArgument(KEY, ConfigKey.class);
         boolean state = BoolArgumentType.getBool(context, ENABLE);
-
+    
         if (key == null) {
             return 0;
         }
@@ -42,9 +43,13 @@ public class ConfigCommand {
                 SyncConfig.SERVER_SHOOT_COOLDOWN_V.set(state);
                 SyncConfig.SERVER_SHOOT_COOLDOWN_V.save();
             }
+            case allowShootWhileSprinting -> {  // <-- ADD THIS
+                GunConfig.ALLOW_SHOOT_WHILE_SPRINTING.set(state);
+                GunConfig.ALLOW_SHOOT_WHILE_SPRINTING.save();
+            }
         }
         context.getSource().sendSystemMessage(Component.translatable(key.lang + "." + (state ? "enabled" : "disabled")));
-
+    
         return Command.SINGLE_SUCCESS;
     }
 
@@ -52,10 +57,11 @@ public class ConfigCommand {
         defaultTableLimit("commands.tacz.config.default_table_limit"),
         serverShootNetworkCheck("commands.tacz.config.server_shoot_network_check"),
         serverShootCooldownCheck("commands.tacz.config.server_shoot_cooldown_check"),
+        allowShootWhileSprinting("commands.tacz.config.allow_shoot_while_sprinting"),  // <-- ADD THIS
         ;
-
+    
         public final String lang;
-
+    
         ConfigKey(String lang) {
             this.lang = lang;
         }
