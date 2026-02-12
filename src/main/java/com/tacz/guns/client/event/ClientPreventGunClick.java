@@ -24,7 +24,7 @@ public class ClientPreventGunClick {
             return;
         }
         // 当交互键按下时，允许交互
-        if (InteractKey.INTERACT_KEY.isDown()) {
+        if (InteractKey.INTERACT_KEY.isDown() || InteractKey.isControllerInteractPressed()) {
             return;
         }
         // 只要主手有枪，那么禁止交互

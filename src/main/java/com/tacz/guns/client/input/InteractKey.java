@@ -31,6 +31,12 @@ public class InteractKey {
             GLFW.GLFW_KEY_O,
             "key.category.tacz");
 
+    private static boolean controllerInteractPressed = false;
+    
+    public static boolean isControllerInteractPressed() {
+        return controllerInteractPressed;
+    }
+
     @SubscribeEvent
     public static void onInteractKeyPress(InputEvent.Key event) {
         if (isInGame() && event.getAction() == GLFW.GLFW_PRESS && INTERACT_KEY.matches(event.getKey(), event.getScanCode())) {
@@ -46,6 +52,7 @@ public class InteractKey {
     }
 
     public static boolean onInteractControllerPress(boolean isPress) {
+        controllerInteractPressed = isPress;
         if (isInGame() && isPress) {
             doInteractLogic();
             return true;
