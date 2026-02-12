@@ -1,12 +1,14 @@
 package com.tacz.guns.adrenaline;
 
 import com.tacz.guns.config.common.AdrenalineConfig;
+import com.tacz.guns.config.common.GunConfig;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.entity.LivingEntity;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -14,7 +16,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class AdrenalineManager {
     private static final Map<UUID, PlayerAdrenalineData> playerData = new ConcurrentHashMap<>();
     private static final ResourceLocation HEALTH_MODIFIER_ID = ResourceLocation.fromNamespaceAndPath("tacz", "adrenaline_health");
-
+    
     public static class PlayerAdrenalineData {
         private final List<Long> recentKills = new ArrayList<>();
         private boolean isActive = false;
@@ -113,10 +115,6 @@ public class AdrenalineManager {
             double baseValue = healthAttribute.getBaseValue();
             double additiveValue = (multiplier - 1.0) * baseValue;
             
-            // Store current health percentage
-            float currentHealth = player.getHealth();
-            float oldMaxHealth = player.getMaxHealth();
-            
             // Create and add new modifier using 1.21.1 API (ResourceLocation-based)
             AttributeModifier modifier = new AttributeModifier(
                 HEALTH_MODIFIER_ID,
@@ -125,9 +123,8 @@ public class AdrenalineManager {
             );
             healthAttribute.addPermanentModifier(modifier);
             
-            // Scale health proportionally to new max health
-            float healthPercentage = currentHealth / oldMaxHealth;
-            player.setHealth(healthPercentage * player.getMaxHealth());
+            // Set player health to the new maximum (full heal on activation)
+            player.setHealth(player.getMaxHealth());
         }
     }
 
@@ -190,6 +187,12 @@ public class AdrenalineManager {
     public static boolean isPlayerInAdrenalineMode(UUID playerId) {
         PlayerAdrenalineData data = playerData.get(playerId);
         return data != null && data.isActive();
+    }
+
+    // ADD THIS METHOD - Check if any living entity has adrenaline mode
+    public static boolean hasAdrenalineMode(LivingEntity entity) {
+        if (entity == null) return false;
+        return isPlayerInAdrenalineMode(entity.getUUID());
     }
 
     public static double getDamageMultiplier(UUID playerId) {
