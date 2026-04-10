@@ -132,7 +132,7 @@ dependencies {
     compileOnly(libs.mezz.jei.neoforge.api)
     runtimeOnly(libs.mezz.jei.neoforge)
     compileOnly(libs.curse.maven.framework)
-    compileOnly(libs.curse.maven.controllable)
+    compileOnly(files("libs/controllable.jar"))
     implementation(libs.dev.latvian.mods.kubejs.neoforge)
     compileOnly(libs.dev.latvian.mods.rhino)
 }

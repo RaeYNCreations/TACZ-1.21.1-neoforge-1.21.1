@@ -23,6 +23,7 @@ import net.neoforged.neoforge.client.settings.KeyModifier;
 import org.lwjgl.glfw.GLFW;
 
 import static com.tacz.guns.util.InputExtraCheck.isInGame;
+import com.mrcrayfish.controllable.client.binding.KeyAdapterBinding;
 
 @EventBusSubscriber(value = Dist.CLIENT)
 public class ShootKey {
@@ -95,6 +96,7 @@ public class ShootKey {
 
     @SubscribeEvent
     public static void semiShoot(InputEvent.MouseButton.Post event) {
+        if (KeyAdapterBinding.isControllerSynthesizedEvent()) return;
         if (isInGame() && SHOOT_KEY.matchesMouse(event.getButton())) {
             // 松开鼠标，重置 DryFire 状态
             if (event.getAction() == GLFW.GLFW_RELEASE) {

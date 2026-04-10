@@ -20,6 +20,7 @@ import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 import org.lwjgl.glfw.GLFW;
 
 import static com.tacz.guns.util.InputExtraCheck.isInGame;
+import com.mrcrayfish.controllable.client.binding.KeyAdapterBinding;
 
 @EventBusSubscriber(value = Dist.CLIENT)
 public class ReloadKey {
@@ -32,6 +33,7 @@ public class ReloadKey {
 
     @SubscribeEvent
     public static void onReloadPress(InputEvent.Key event) {
+        if (KeyAdapterBinding.isControllerSynthesizedEvent()) return;
         if (isInGame() && event.getAction() == GLFW.GLFW_PRESS && RELOAD_KEY.matches(event.getKey(), event.getScanCode())) {
             LocalPlayer player = Minecraft.getInstance().player;
             if (player == null || player.isSpectator()) {

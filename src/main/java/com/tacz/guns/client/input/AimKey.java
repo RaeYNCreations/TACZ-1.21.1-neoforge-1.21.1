@@ -18,6 +18,7 @@ import net.neoforged.neoforge.client.settings.KeyModifier;
 import org.lwjgl.glfw.GLFW;
 
 import static com.tacz.guns.util.InputExtraCheck.isInGame;
+import com.mrcrayfish.controllable.client.binding.KeyAdapterBinding;
 
 @EventBusSubscriber(value = Dist.CLIENT)
 public class AimKey {
@@ -30,6 +31,7 @@ public class AimKey {
 
     @SubscribeEvent
     public static void onAimPress(InputEvent.MouseButton.Post event) {
+        if (KeyAdapterBinding.isControllerSynthesizedEvent()) return;
         if (isInGame() && AIM_KEY.matchesMouse(event.getButton())) {
             LocalPlayer player = Minecraft.getInstance().player;
             if (player == null || player.isSpectator()) {

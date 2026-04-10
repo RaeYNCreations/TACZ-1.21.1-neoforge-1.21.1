@@ -21,6 +21,7 @@ import net.neoforged.neoforge.client.settings.KeyModifier;
 import org.lwjgl.glfw.GLFW;
 
 import static com.tacz.guns.util.InputExtraCheck.isInGame;
+import com.mrcrayfish.controllable.client.binding.KeyAdapterBinding;
 
 @EventBusSubscriber(value = Dist.CLIENT)
 public class InteractKey {
@@ -39,6 +40,7 @@ public class InteractKey {
 
     @SubscribeEvent
     public static void onInteractKeyPress(InputEvent.Key event) {
+        if (KeyAdapterBinding.isControllerSynthesizedEvent()) return;
         if (isInGame() && event.getAction() == GLFW.GLFW_PRESS && INTERACT_KEY.matches(event.getKey(), event.getScanCode())) {
             doInteractLogic();
         }
@@ -46,6 +48,7 @@ public class InteractKey {
 
     @SubscribeEvent
     public static void onInteractMousePress(InputEvent.MouseButton.Post event) {
+        if (KeyAdapterBinding.isControllerSynthesizedEvent()) return;
         if (isInGame() && event.getAction() == GLFW.GLFW_PRESS && INTERACT_KEY.matchesMouse(event.getButton())) {
             doInteractLogic();
         }

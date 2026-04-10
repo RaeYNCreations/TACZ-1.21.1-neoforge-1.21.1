@@ -15,6 +15,7 @@ import net.neoforged.neoforge.client.settings.KeyModifier;
 import org.lwjgl.glfw.GLFW;
 
 import static com.tacz.guns.util.InputExtraCheck.isInGame;
+import com.mrcrayfish.controllable.client.binding.KeyAdapterBinding;
 
 @EventBusSubscriber(value = Dist.CLIENT)
 public class FireSelectKey {
@@ -27,6 +28,7 @@ public class FireSelectKey {
 
     @SubscribeEvent
     public static void onFireSelectKeyPress(InputEvent.Key event) {
+        if (KeyAdapterBinding.isControllerSynthesizedEvent()) return;
         if (isInGame() && event.getAction() == GLFW.GLFW_PRESS && FIRE_SELECT_KEY.matches(event.getKey(), event.getScanCode())) {
             doFireSelectLogic();
         }
@@ -34,6 +36,7 @@ public class FireSelectKey {
 
     @SubscribeEvent
     public static void onFireSelectMousePress(InputEvent.MouseButton.Post event) {
+        if (KeyAdapterBinding.isControllerSynthesizedEvent()) return;
         if (isInGame() && event.getAction() == GLFW.GLFW_PRESS && FIRE_SELECT_KEY.matchesMouse(event.getButton())) {
             doFireSelectLogic();
         }

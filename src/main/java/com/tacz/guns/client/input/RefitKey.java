@@ -15,6 +15,7 @@ import net.neoforged.neoforge.client.settings.KeyModifier;
 import org.lwjgl.glfw.GLFW;
 
 import static com.tacz.guns.util.InputExtraCheck.isInGame;
+import com.mrcrayfish.controllable.client.binding.KeyAdapterBinding;
 
 @EventBusSubscriber(value = Dist.CLIENT)
 public class RefitKey {
@@ -27,6 +28,7 @@ public class RefitKey {
 
     @SubscribeEvent
     public static void onRefitPress(InputEvent.Key event) {
+        if (KeyAdapterBinding.isControllerSynthesizedEvent()) return;
         if (event.getAction() == GLFW.GLFW_PRESS && REFIT_KEY.matches(event.getKey(), event.getScanCode())) {
             LocalPlayer player = Minecraft.getInstance().player;
             if (player == null || player.isSpectator()) {

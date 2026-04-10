@@ -14,6 +14,7 @@ import net.neoforged.neoforge.client.settings.KeyModifier;
 import org.lwjgl.glfw.GLFW;
 
 import static com.tacz.guns.util.InputExtraCheck.isInGame;
+import com.mrcrayfish.controllable.client.binding.KeyAdapterBinding;
 
 @EventBusSubscriber(value = Dist.CLIENT)
 public class MeleeKey {
@@ -26,6 +27,7 @@ public class MeleeKey {
 
     @SubscribeEvent
     public static void onMeleeKeyPress(InputEvent.Key event) {
+        if (KeyAdapterBinding.isControllerSynthesizedEvent()) return;
         if (isInGame() && event.getAction() == GLFW.GLFW_PRESS && MELEE_KEY.matches(event.getKey(), event.getScanCode())) {
             doMeleeLogic();
         }
@@ -33,6 +35,7 @@ public class MeleeKey {
 
     @SubscribeEvent
     public static void onMeleeMousePress(InputEvent.MouseButton.Post event) {
+        if (KeyAdapterBinding.isControllerSynthesizedEvent()) return;
         if (isInGame() && event.getAction() == GLFW.GLFW_PRESS && MELEE_KEY.matchesMouse(event.getButton())) {
             doMeleeLogic();
         }

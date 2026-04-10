@@ -17,6 +17,7 @@ import net.neoforged.neoforge.client.settings.KeyModifier;
 import org.lwjgl.glfw.GLFW;
 
 import static com.tacz.guns.util.InputExtraCheck.isInGame;
+import com.mrcrayfish.controllable.client.binding.KeyAdapterBinding;
 
 @EventBusSubscriber(value = Dist.CLIENT)
 public class CrawlKey {
@@ -29,6 +30,7 @@ public class CrawlKey {
 
     @SubscribeEvent
     public static void onCrawlPress(InputEvent.Key event) {
+        if (KeyAdapterBinding.isControllerSynthesizedEvent()) return;
         if (isInGame() && CRAWL_KEY.matches(event.getKey(), event.getScanCode())) {
             if (!SyncConfig.ENABLE_CRAWL.get()) {
                 return;
